@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #0f172a;
+  --color-brand-orange: #f97316;
+  --color-brand-gray: #f8fafc;
+  --color-brand-charcoal: #1e293b;
+  
+  --color-background: #ffffff;
+  --color-foreground: var(--color-brand-charcoal);
+
+  --font-sans: var(--font-inter);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
