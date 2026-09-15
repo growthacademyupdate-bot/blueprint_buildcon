@@ -29,7 +29,7 @@ export default function AboutSection() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-square lg:aspect-[4/5]">
               <img
-                src="https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&q=80"
+                src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Construction Site Supervision"
                 className="w-full h-full object-cover"
               />
@@ -67,7 +67,7 @@ export default function AboutSection() {
             </div>
 
             <Link
-              href="#services"
+              href="/about"
               className="inline-flex items-center px-8 py-3.5 bg-brand-navy text-white font-semibold rounded-full hover:bg-slate-800 transition-colors shadow-lg"
             >
               Know More About Us

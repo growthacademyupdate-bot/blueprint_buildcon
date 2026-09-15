@@ -62,14 +62,14 @@ export default function HeroSection() {
 
               <div className="flex flex-wrap gap-4 mb-10">
                 <Link
-                  href="#contact"
+                  href="/contact"
                   className="px-8 py-3.5 bg-brand-orange text-white font-semibold rounded-full hover:bg-orange-600 transition-all shadow-lg hover:shadow-orange-500/30 flex items-center"
                 >
                   Start Your Project
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
                 <Link
-                  href="#services"
+                  href="/services"
                   className="px-8 py-3.5 bg-white/10 text-white font-semibold rounded-full hover:bg-white/20 backdrop-blur-sm transition-all border border-white/20"
                 >
                   Explore Our Services

@@ -54,7 +54,7 @@ export default function ServicesSection() {
                   {service.description}
                 </p>
                 <Link
-                  href="#contact"
+                  href="/contact"
                   className="inline-flex items-center text-brand-orange font-semibold hover:text-orange-700 transition-colors"
                 >
                   Learn More

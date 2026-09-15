@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+  const showSolidNav = isScrolled || !isHomePage;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,28 +22,28 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Process', href: '#process' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Packages', href: '#packages' },
-    { name: 'Why Us', href: '#why-us' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Services', href: '/services' },
+    { name: 'Process', href: '/process' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Packages', href: '/packages' },
+    { name: 'Why Us', href: '/why-us' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        showSolidNav
           ? 'bg-white/95 backdrop-blur-md shadow-sm py-3'
           : 'bg-transparent py-5'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <Link href="#home" className="flex-shrink-0">
-            <span className={`text-xl font-bold tracking-tight ${isScrolled ? 'text-brand-navy' : 'text-brand-navy lg:text-white'}`}>
+          <Link href="/" className="flex-shrink-0">
+            <span className={`text-xl font-bold tracking-tight ${showSolidNav ? 'text-brand-navy' : 'text-brand-navy lg:text-white'}`}>
               Blueprint <span className="text-brand-orange">Build Con</span>
             </span>
           </Link>
@@ -52,7 +56,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={`text-sm font-medium transition-colors hover:text-brand-orange ${
-                      isScrolled ? 'text-brand-charcoal' : 'text-brand-charcoal lg:text-white'
+                      showSolidNav ? 'text-brand-charcoal' : 'text-brand-charcoal lg:text-white'
                     }`}
                   >
                     {link.name}
@@ -61,7 +65,7 @@ export default function Navbar() {
               ))}
             </ul>
             <Link
-              href="#contact"
+              href="/contact"
               className="px-6 py-2.5 bg-brand-orange text-white text-sm font-medium rounded-full hover:bg-orange-600 transition-colors shadow-sm"
             >
               Get Free Consultation
@@ -72,8 +76,10 @@ export default function Navbar() {
           <button
             className="lg:hidden p-2 text-brand-navy"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} className={isScrolled ? 'text-brand-navy' : 'text-brand-navy lg:text-white'} />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} className={showSolidNav ? 'text-brand-navy' : 'text-brand-navy lg:text-white'} />}
           </button>
         </div>
       </div>
@@ -99,7 +105,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                href="#contact"
+                href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="mt-4 mx-4 px-6 py-3 bg-brand-orange text-white text-center font-medium rounded-lg hover:bg-orange-600 transition-colors"
               >

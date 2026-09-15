@@ -36,7 +36,7 @@ export default function EstimateCTA() {
             className="flex flex-col sm:flex-row gap-4 w-full md:w-auto"
           >
             <Link
-              href="#contact"
+              href="/contact"
               className="flex items-center justify-center px-8 py-4 bg-brand-orange text-white font-bold rounded-xl hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
             >
               <Calculator className="mr-2 w-5 h-5" />
