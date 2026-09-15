@@ -41,6 +41,6 @@ export const services = [
     title: 'Project Management',
     description: 'Dedicated supervision, scheduling, vendor coordination, quality inspections and progress monitoring.',
     icon: ClipboardList,
-    image: 'https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&q=80',
+    image: 'https://plus.unsplash.com/premium_photo-1661290256778-3b821d52c514?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];

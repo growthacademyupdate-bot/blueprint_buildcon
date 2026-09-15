@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 
-const inter = Inter({
-  variable: "--font-inter",
+const bodyFont = DM_Sans({
+  variable: "--font-body",
+  subsets: ["latin"],
+  display: 'swap',
+});
+
+const displayFont = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
   display: 'swap',
 });
@@ -29,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} scroll-smooth antialiased`}
+      className={`${bodyFont.variable} ${displayFont.variable} scroll-smooth antialiased`}
     >
       <body className="min-h-screen flex flex-col font-sans">
         <Navbar />

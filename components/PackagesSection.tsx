@@ -63,7 +63,7 @@ export default function PackagesSection() {
               </div>
 
               <Link
-                href="#contact"
+                href="/contact"
                 className={`w-full py-4 rounded-xl text-center font-bold transition-all ${
                   pkg.popular
                     ? 'bg-brand-orange text-white hover:bg-orange-600 shadow-lg'

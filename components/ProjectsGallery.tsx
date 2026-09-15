@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, ExternalLink } from 'lucide-react';
 import { projects } from '@/data/projects';
@@ -8,6 +9,7 @@ import { projects } from '@/data/projects';
 export default function ProjectsGallery() {
   const [filter, setFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const router = useRouter();
 
   const categories = ['All', 'Residential', 'Villas', 'Commercial', 'Renovation'];
 
@@ -151,8 +153,7 @@ export default function ProjectsGallery() {
                   <button 
                     onClick={() => {
                       setSelectedProject(null);
-                      const contactEl = document.getElementById('contact');
-                      if(contactEl) contactEl.scrollIntoView({ behavior: 'smooth' });
+                      router.push('/contact');
                     }}
                     className="w-full py-3 bg-brand-navy text-white rounded-lg hover:bg-slate-800 transition-colors font-semibold"
                   >

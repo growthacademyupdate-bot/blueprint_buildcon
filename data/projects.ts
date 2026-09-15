@@ -19,7 +19,7 @@ export const projects = [
     location: 'Bengaluru, Karnataka',
     category: 'Villas',
     description: 'An expansive luxury villa featuring a private pool, landscaped gardens, and high-end imported materials.',
-    image: 'https://images.unsplash.com/photo-1613490908571-9ce2249b4908?auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1688653802629-5360086bf632?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     scope: ['Turnkey Construction', 'Interior Design', 'Landscaping'],
     details: {
       duration: '18 Months',

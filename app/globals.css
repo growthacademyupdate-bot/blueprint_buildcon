@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-navy: #0f172a;
-  --color-brand-orange: #f97316;
-  --color-brand-gray: #f8fafc;
-  --color-brand-charcoal: #1e293b;
+  --color-brand-navy: #14221f;
+  --color-brand-orange: #e46b3c;
+  --color-brand-gray: #f4f1eb;
+  --color-brand-charcoal: #26332f;
+  --color-brand-sand: #e7dfd2;
   
   --color-background: #ffffff;
   --color-foreground: var(--color-brand-charcoal);
 
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
 }
 
 @layer utilities {
@@ -21,6 +23,22 @@
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background-color: var(--color-brand-orange);
+  color: white;
 }
 
 /* Smooth scroll */

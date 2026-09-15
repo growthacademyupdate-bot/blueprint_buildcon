@@ -24,19 +24,19 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Company</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#about" className="text-slate-400 hover:text-white transition-colors text-sm">About Us</Link>
+                <Link href="/about" className="text-slate-400 hover:text-white transition-colors text-sm">About Us</Link>
               </li>
               <li>
-                <Link href="#projects" className="text-slate-400 hover:text-white transition-colors text-sm">Projects</Link>
+                <Link href="/projects" className="text-slate-400 hover:text-white transition-colors text-sm">Projects</Link>
               </li>
               <li>
-                <Link href="#services" className="text-slate-400 hover:text-white transition-colors text-sm">Services</Link>
+                <Link href="/services" className="text-slate-400 hover:text-white transition-colors text-sm">Services</Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Careers</Link>
               </li>
               <li>
-                <Link href="#contact" className="text-slate-400 hover:text-white transition-colors text-sm">Contact</Link>
+                <Link href="/contact" className="text-slate-400 hover:text-white transition-colors text-sm">Contact</Link>
               </li>
             </ul>
           </div>
@@ -46,19 +46,19 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Services</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#services" className="text-slate-400 hover:text-white transition-colors text-sm">Home Construction</Link>
+                <Link href="/services" className="text-slate-400 hover:text-white transition-colors text-sm">Home Construction</Link>
               </li>
               <li>
-                <Link href="#services" className="text-slate-400 hover:text-white transition-colors text-sm">Commercial Construction</Link>
+                <Link href="/services" className="text-slate-400 hover:text-white transition-colors text-sm">Commercial Construction</Link>
               </li>
               <li>
-                <Link href="#services" className="text-slate-400 hover:text-white transition-colors text-sm">Architectural Design</Link>
+                <Link href="/services" className="text-slate-400 hover:text-white transition-colors text-sm">Architectural Design</Link>
               </li>
               <li>
-                <Link href="#services" className="text-slate-400 hover:text-white transition-colors text-sm">Renovation</Link>
+                <Link href="/services" className="text-slate-400 hover:text-white transition-colors text-sm">Renovation</Link>
               </li>
               <li>
-                <Link href="#services" className="text-slate-400 hover:text-white transition-colors text-sm">Interior & Finishing</Link>
+                <Link href="/services" className="text-slate-400 hover:text-white transition-colors text-sm">Interior & Finishing</Link>
               </li>
             </ul>
           </div>
