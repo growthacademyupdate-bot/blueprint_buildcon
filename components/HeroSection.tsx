@@ -18,12 +18,43 @@ export default function HeroSection() {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Frontend mock submission
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          city: formData.city,
+          projectType: formData.projectType,
+          location: formData.location,
+          budget: formData.budget,
+          startDate: formData.startDate,
+        }),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.error ?? 'Unable to submit your enquiry');
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: '', phone: '', email: '', city: '', projectType: '', location: '', budget: '', startDate: '' });
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : 'Unable to submit your enquiry');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -111,6 +142,7 @@ export default function HeroSection() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       type="text"
@@ -199,9 +231,10 @@ export default function HeroSection() {
 
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-full bg-brand-navy text-white font-semibold py-3.5 rounded-lg hover:bg-slate-800 transition-colors mt-2"
                   >
-                    Get Free Consultation
+                    {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
                   </button>
                   
                   <p className="text-xs text-center text-slate-500 mt-4 font-medium">

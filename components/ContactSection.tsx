@@ -15,12 +15,34 @@ export default function ContactSection() {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setFormData({ name: '', phone: '', email: '', city: '', projectType: '', message: '' });
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.error ?? 'Unable to submit your enquiry');
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: '', phone: '', email: '', city: '', projectType: '', message: '' });
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : 'Unable to submit your enquiry');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -117,6 +139,7 @@ export default function ContactSection() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-brand-navy mb-2">Name</label>
@@ -205,9 +228,10 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full bg-brand-orange text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
                 >
-                  Submit Enquiry
+                  {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
                 </button>
               </form>
             )}
