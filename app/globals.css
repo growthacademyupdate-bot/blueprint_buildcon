@@ -45,3 +45,45 @@ h6 {
 html {
   scroll-behavior: smooth;
 }
+
+body:has(.admin-root) > nav,
+body:has(.admin-root) > footer,
+body:has(.admin-root) > div[aria-label="Floating contact actions"] {
+  display: none;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.field:focus {
+  border-color: var(--color-brand-orange);
+  box-shadow: 0 0 0 2px rgb(228 107 60 / 15%);
+}
+
+.admin-root main {
+  min-width: 0;
+}
+
+.admin-root .overflow-x-auto {
+  scrollbar-color: var(--color-brand-orange) var(--color-brand-gray);
+  scrollbar-width: auto;
+}
+
+.admin-root .overflow-x-auto::-webkit-scrollbar {
+  height: 12px;
+}
+
+.admin-root .overflow-x-auto::-webkit-scrollbar-track {
+  background: var(--color-brand-gray);
+}
+
+.admin-root .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: var(--color-brand-orange);
+  border: 3px solid var(--color-brand-gray);
+}

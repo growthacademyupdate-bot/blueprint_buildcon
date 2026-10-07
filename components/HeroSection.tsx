@@ -1,25 +1,48 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, X } from 'lucide-react';
 import Link from 'next/link';
 
 export default function HeroSection() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    email: '',
-    city: '',
-    projectType: '',
-    location: '',
-    budget: '',
-    startDate: '',
+    company: '',
+    message: '',
   });
 
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    setIsFormOpen(true);
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isFormOpen) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsFormOpen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isFormOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,12 +56,8 @@ export default function HeroSection() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          email: formData.email,
-          city: formData.city,
-          projectType: formData.projectType,
-          location: formData.location,
-          budget: formData.budget,
-          startDate: formData.startDate,
+          company: formData.company,
+          message: formData.message,
         }),
       });
 
@@ -48,7 +67,7 @@ export default function HeroSection() {
       }
 
       setIsSubmitted(true);
-      setFormData({ name: '', phone: '', email: '', city: '', projectType: '', location: '', budget: '', startDate: '' });
+      setFormData({ name: '', phone: '', company: '', message: '' });
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Unable to submit your enquiry');
@@ -57,7 +76,7 @@ export default function HeroSection() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -74,7 +93,7 @@ export default function HeroSection() {
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-20 py-12 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="max-w-3xl">
           
           {/* Hero Content */}
           <div className="lg:col-span-7 text-white">
@@ -124,128 +143,44 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Consultation Form Card */}
-          <div className="lg:col-span-5 w-full max-w-md mx-auto lg:ml-auto">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-2xl p-6 md:p-8"
-            >
-              <h2 className="text-2xl font-bold text-brand-navy mb-6">Plan Your Construction With Us</h2>
-              
-              {isSubmitted ? (
-                <div className="bg-green-50 border border-green-200 text-green-700 rounded-xl p-6 text-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 mx-auto text-green-500" />
-                  <p className="font-medium text-lg">Thank you!</p>
-                  <p>Our construction expert will contact you shortly.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Full Name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm"
-                    />
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Mobile Number"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm"
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Email Address"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm"
-                    />
-                    <input
-                      type="text"
-                      name="city"
-                      placeholder="City"
-                      required
-                      value={formData.city}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm"
-                    />
-                  </div>
-
-                  <select
-                    name="projectType"
-                    required
-                    value={formData.projectType}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm bg-white"
-                  >
-                    <option value="" disabled>Project Type</option>
-                    <option value="Residential Construction">Residential Construction</option>
-                    <option value="Commercial Construction">Commercial Construction</option>
-                    <option value="Villa Construction">Villa Construction</option>
-                    <option value="Renovation">Renovation</option>
-                    <option value="Interior & Finishing">Interior & Finishing</option>
-                    <option value="Other">Other</option>
-                  </select>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      name="location"
-                      placeholder="Property Location"
-                      value={formData.location}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm"
-                    />
-                    <input
-                      type="text"
-                      name="budget"
-                      placeholder="Approximate Budget"
-                      value={formData.budget}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm"
-                    />
-                  </div>
-                  
-                  <input
-                    type="date"
-                    name="startDate"
-                    placeholder="Expected Start Date"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent text-sm text-slate-500"
-                  />
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-brand-navy text-white font-semibold py-3.5 rounded-lg hover:bg-slate-800 transition-colors mt-2"
-                  >
-                    {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
-                  </button>
-                  
-                  <p className="text-xs text-center text-slate-500 mt-4 font-medium">
-                    No obligation • Expert consultation • Transparent estimate
-                  </p>
-                </form>
-              )}
-            </motion.div>
-          </div>
         </div>
       </div>
+
+      {isFormOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="consultation-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsFormOpen(false); }}>
+          <motion.div initial={{ opacity: 0, scale: 0.96, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.25 }} className="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden bg-white shadow-2xl md:grid-cols-[0.9fr_1.1fr]">
+            <div className="relative hidden min-h-[420px] overflow-hidden bg-brand-navy md:block">
+              <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=85&w=1000" alt="Blueprint Build Con construction project" className="absolute inset-0 h-full w-full object-cover opacity-70" />
+              <div className="absolute inset-0 bg-brand-navy/70" />
+              <div className="relative flex h-full flex-col justify-end p-8 text-white lg:p-10">
+                <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand-orange">Blueprint Build Con</p>
+                <h2 className="max-w-sm text-4xl font-bold leading-tight">Build your vision with confidence.</h2>
+                <p className="mt-4 max-w-sm text-sm leading-6 text-white/75">Tell us a little about your project and our team will help you find the right next step.</p>
+              </div>
+            </div>
+
+            <div className="relative min-h-0 overflow-y-auto p-5 sm:p-6 md:p-7">
+              <button type="button" aria-label="Close consultation form" onClick={() => setIsFormOpen(false)} className="absolute right-5 top-5 text-slate-400 transition-colors hover:text-brand-navy"><X size={24} /></button>
+              <h2 id="consultation-title" className="pr-8 text-2xl font-bold leading-tight text-brand-navy sm:text-3xl">Let Us Help You With the Right Solution</h2>
+
+              {isSubmitted ? (
+                <div className="mt-8 space-y-4 border border-green-200 bg-green-50 p-6 text-center text-green-700"><CheckCircle2 className="mx-auto h-12 w-12 text-green-500" /><p className="text-lg font-bold">Thank you!</p><p>Our construction expert will contact you shortly.</p></div>
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-5 space-y-3">
+                  {error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
+                  <input type="text" name="name" placeholder="Your Name" required value={formData.name} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
+                  <input type="tel" name="phone" placeholder="Your Phone Number" required value={formData.phone} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
+                  <input type="text" name="company" placeholder="Company Name" value={formData.company} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
+                  <textarea name="message" placeholder="Message..." rows={2} value={formData.message} onChange={handleChange} className="w-full resize-none border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
+                  <p className="text-sm font-medium leading-5 text-blue-700">By clicking Sign Up, you confirm that you have read and agree to our Terms &amp; Conditions and Privacy Policy.</p>
+                  <label className="flex items-start gap-2 text-sm leading-5 text-blue-700"><input type="checkbox" required className="mt-1 h-4 w-4 accent-blue-600" /><span>By submitting this form, you agree to be contacted by us on <strong>WhatsApp / SMS / Email</strong> regarding your enquiry.</span></label>
+                  <div className="grid grid-cols-2 gap-3 pt-1"><button type="button" onClick={() => setIsFormOpen(false)} className="bg-blue-100 px-4 py-2.5 font-semibold text-blue-700 transition hover:bg-blue-200">Skip</button><button type="submit" disabled={isSubmitting} className="bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-wait disabled:opacity-60">{isSubmitting ? 'Submitting...' : 'Sign Up'}</button></div>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }
