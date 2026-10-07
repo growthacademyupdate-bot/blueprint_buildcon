@@ -4,12 +4,8 @@ const consultationSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true, maxlength: 100 },
     phone: { type: String, required: true, trim: true, maxlength: 30 },
-    email: { type: String, required: true, trim: true, lowercase: true, maxlength: 254 },
-    city: { type: String, required: true, trim: true, maxlength: 100 },
-    projectType: { type: String, required: true, trim: true, maxlength: 100 },
-    location: { type: String, trim: true, default: '', maxlength: 200 },
-    budget: { type: String, trim: true, default: '', maxlength: 100 },
-    startDate: { type: String, trim: true, default: '' },
+    company: { type: String, trim: true, default: '', maxlength: 150 },
+    message: { type: String, trim: true, default: '', maxlength: 2000 },
   },
   { timestamps: true, collection: 'consultations' },
 );

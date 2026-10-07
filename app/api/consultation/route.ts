@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import { Consultation } from '@/models/Consultation';
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const requiredFields = ['name', 'phone', 'email', 'city', 'projectType'] as const;
+const requiredFields = ['name', 'phone'] as const;
 
 export async function POST(request: Request) {
   try {
@@ -11,21 +10,13 @@ export async function POST(request: Request) {
     const consultation = {
       name: typeof body.name === 'string' ? body.name.trim() : '',
       phone: typeof body.phone === 'string' ? body.phone.trim() : '',
-      email: typeof body.email === 'string' ? body.email.trim().toLowerCase() : '',
-      city: typeof body.city === 'string' ? body.city.trim() : '',
-      projectType: typeof body.projectType === 'string' ? body.projectType.trim() : '',
-      location: typeof body.location === 'string' ? body.location.trim() : '',
-      budget: typeof body.budget === 'string' ? body.budget.trim() : '',
-      startDate: typeof body.startDate === 'string' ? body.startDate.trim() : '',
+      company: typeof body.company === 'string' ? body.company.trim() : '',
+      message: typeof body.message === 'string' ? body.message.trim() : '',
     };
 
     const missingField = requiredFields.find((field) => !consultation[field]);
     if (missingField) {
       return NextResponse.json({ error: `${missingField} is required` }, { status: 400 });
-    }
-
-    if (!emailPattern.test(consultation.email)) {
-      return NextResponse.json({ error: 'Please provide a valid email address' }, { status: 400 });
     }
 
     await connectToDatabase();

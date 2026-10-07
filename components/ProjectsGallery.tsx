@@ -5,17 +5,19 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, ExternalLink } from 'lucide-react';
 import { projects } from '@/data/projects';
+import type { PublicProject } from '@/lib/public-content';
 
-export default function ProjectsGallery() {
+export default function ProjectsGallery({ projects: providedProjects }: { projects?: PublicProject[] }) {
+  const projectData = providedProjects ?? projects;
   const [filter, setFilter] = useState('All');
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<PublicProject | null>(null);
   const router = useRouter();
 
   const categories = ['All', 'Residential', 'Villas', 'Commercial', 'Renovation'];
 
   const filteredProjects = filter === 'All' 
-    ? projects 
-    : projects.filter(p => p.category === filter);
+    ? projectData
+    : projectData.filter(p => p.category === filter);
 
   return (
     <section id="projects" className="py-20 lg:py-32 bg-white">
