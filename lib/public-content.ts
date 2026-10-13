@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { connectToDatabase } from '@/lib/mongodb';
 import { Project } from '@/models/Project';
 import { Service } from '@/models/Service';
@@ -9,9 +10,14 @@ export type PublicProject = {
   title: string;
   location: string;
   category: string;
+  type?: string;
+  client?: string;
+  year?: number;
   description: string;
   image: string;
+  images: string[];
   scope: string[];
+  additionalDetails?: string;
   details: { duration: string; area: string; completion: string };
 };
 
@@ -27,9 +33,106 @@ export async function getPublicProjects(): Promise<PublicProject[]> {
   try {
     await connectToDatabase();
     const records = await Project.find({ status: 'published' }).sort({ createdAt: -1 }).lean();
-    if (records.length) return records.map((project) => ({ id: String(project._id), title: project.title, location: project.location, category: project.category, description: project.description, image: project.images[0]?.url ?? fallbackProjects[0].image, scope: project.scope, details: { duration: project.duration, area: project.area, completion: project.completion } }));
-  } catch { /* Static content keeps the public site available while MongoDB is unavailable. */ }
-  return fallbackProjects;
+    if (records.length) {
+      return records.map((project) => {
+        const imageUrls = Array.isArray(project.images) && project.images.length > 0
+          ? project.images.map((img: { url: string }) => img.url).filter(Boolean)
+          : [];
+        const mainImage = imageUrls[0] || fallbackProjects[0].image;
+        return {
+          id: String(project._id),
+          title: project.title,
+          location: project.location,
+          category: project.category,
+          type: project.type || `${project.category} Project`,
+          client: project.client || '',
+          year: project.year,
+          description: project.description,
+          image: mainImage,
+          images: imageUrls.length > 0 ? imageUrls : [mainImage],
+          scope: Array.isArray(project.scope) && project.scope.length > 0
+            ? project.scope
+            : ['Architecture & Approvals', 'Structural Civil Design', 'Turnkey Construction', 'Interior Finishing & MEP'],
+          additionalDetails: project.additionalDetails || '',
+          details: {
+            duration: project.duration || 'Flexible Timeline',
+            area: project.area || 'Custom Specification',
+            completion: project.completion || 'Completed',
+          },
+        };
+      });
+    }
+  } catch {
+    /* Static content keeps the public site available while MongoDB is unavailable. */
+  }
+  return fallbackProjects.map((p) => ({
+    ...p,
+    images: p.images && p.images.length > 0 ? p.images : [p.image],
+  }));
+}
+
+export async function getPublicProjectById(id: string): Promise<PublicProject | null> {
+  try {
+    await connectToDatabase();
+    let record: any = null;
+    if (mongoose.isValidObjectId(id)) {
+      record = await Project.findById(id).lean();
+    }
+    if (!record) {
+      try {
+        record = await Project.findOne({ _id: id }).lean();
+      } catch {
+        /* invalid query format */
+      }
+    }
+    if (record) {
+      const imageUrls = Array.isArray(record.images) && record.images.length > 0
+        ? record.images.map((img: { url: string }) => img.url).filter(Boolean)
+        : [];
+      const mainImage = imageUrls[0] || fallbackProjects[0].image;
+      return {
+        id: String(record._id),
+        title: record.title,
+        location: record.location,
+        category: record.category,
+        type: record.type || `${record.category} Project`,
+        client: record.client || '',
+        year: record.year,
+        description: record.description,
+        image: mainImage,
+        images: imageUrls.length > 0 ? imageUrls : [mainImage],
+        scope: Array.isArray(record.scope) && record.scope.length > 0
+          ? record.scope
+          : ['Architecture & Approvals', 'Structural Civil Design', 'Turnkey Construction', 'Interior Finishing & MEP'],
+        additionalDetails: record.additionalDetails || '',
+        details: {
+          duration: record.duration || 'Flexible Timeline',
+          area: record.area || 'Custom Specification',
+          completion: record.completion || 'Completed',
+        },
+      };
+    }
+  } catch {
+    /* Database connection or query failed, continue to fallback */
+  }
+
+  const fallback = fallbackProjects.find((item) => item.id === id);
+  if (fallback) {
+    return {
+      ...fallback,
+      images: fallback.images && fallback.images.length > 0 ? fallback.images : [fallback.image],
+    };
+  }
+
+  return null;
+}
+
+export async function getRelatedProjects(currentId: string, category?: string, limit: number = 3): Promise<PublicProject[]> {
+  const allProjects = await getPublicProjects();
+  const others = allProjects.filter((p) => p.id !== currentId);
+  const sameCategory = category ? others.filter((p) => p.category.toLowerCase() === category.toLowerCase()) : [];
+  const remaining = others.filter((p) => !sameCategory.includes(p));
+  return [...sameCategory, ...remaining].slice(0, limit);
 }
 
 export async function getPublicServices(): Promise<PublicService[]> {
@@ -44,4 +147,4 @@ export async function getPublicServices(): Promise<PublicService[]> {
     iconName: item.id,
     image: item.image,
   }));
-}
+}

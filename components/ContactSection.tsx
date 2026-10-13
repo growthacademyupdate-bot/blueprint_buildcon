@@ -229,7 +229,7 @@ export default function ContactSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-brand-orange text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
+                  className="w-full bg-brand-orange text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/25"
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
                 </button>

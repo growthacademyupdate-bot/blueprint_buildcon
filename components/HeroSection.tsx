@@ -113,7 +113,7 @@ export default function HeroSection() {
               <div className="flex flex-wrap gap-4 mb-10">
                 <Link
                   href="/contact"
-                  className="px-8 py-3.5 bg-brand-orange text-white font-semibold rounded-full hover:bg-orange-600 transition-all shadow-lg hover:shadow-orange-500/30 flex items-center"
+                  className="px-8 py-3.5 bg-brand-orange text-white font-semibold rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/30 flex items-center"
                 >
                   Start Your Project
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -153,7 +153,7 @@ export default function HeroSection() {
               <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=85&w=1000" alt="Blueprint Build Con construction project" className="absolute inset-0 h-full w-full object-cover opacity-70" />
               <div className="absolute inset-0 bg-brand-navy/70" />
               <div className="relative flex h-full flex-col justify-end p-8 text-white lg:p-10">
-                <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand-orange">Blueprint Build Con</p>
+                <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand-orange">BluePrint-BuildCon</p>
                 <h2 className="max-w-sm text-4xl font-bold leading-tight">Build your vision with confidence.</h2>
                 <p className="mt-4 max-w-sm text-sm leading-6 text-white/75">Tell us a little about your project and our team will help you find the right next step.</p>
               </div>

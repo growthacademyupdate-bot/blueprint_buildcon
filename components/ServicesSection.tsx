@@ -61,7 +61,7 @@ export default function ServicesSection({ services: providedServices }: { servic
                   </p>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center text-brand-orange font-semibold hover:text-orange-700 transition-colors"
+                    className="inline-flex items-center text-brand-orange font-semibold hover:text-blue-700 transition-colors"
                   >
                     Learn More
                     <ArrowRight className="ml-2 w-4 h-4" />

@@ -47,7 +47,7 @@ export default function PageHero({ eyebrow, title, description, image, imageAlt 
         alt={imageAlt}
         className="absolute inset-0 -z-20 h-full w-full scale-110 object-cover will-change-transform"
       />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(20,34,31,0.82)_0%,rgba(20,34,31,0.52)_46%,rgba(20,34,31,0.12)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(10,18,39,0.88)_0%,rgba(10,18,39,0.55)_46%,rgba(10,18,39,0.15)_100%)]" />
       <div className="container mx-auto w-full px-4 pb-20 md:px-6 lg:pb-28">
         <div className="max-w-3xl">
           <p className="mb-5 text-sm font-bold uppercase tracking-[0.28em] text-brand-orange">{eyebrow}</p>

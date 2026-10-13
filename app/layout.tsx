@@ -18,12 +18,20 @@ const displayFont = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Blueprint Build Con | Premium Home & Commercial Construction",
-  description: "Blueprint Build Con provides reliable end-to-end residential and commercial construction services with transparent pricing, professional project management and quality-focused execution.",
+  title: "BluePrint-BuildCon | Ideas • Structures • Reality",
+  description: "BluePrint-BuildCon provides reliable end-to-end residential and commercial construction services with transparent pricing, professional project management and quality-focused execution.",
+  icons: {
+    icon: [
+      { url: '/logo-mark.png', type: 'image/png' },
+      { url: '/favicon.ico' },
+    ],
+    apple: '/logo-mark.png',
+  },
   openGraph: {
-    title: "Blueprint Build Con",
-    description: "End-to-end residential and commercial construction services.",
+    title: "BluePrint-BuildCon | Ideas • Structures • Reality",
+    description: "End-to-end residential and commercial construction services. From blueprint to reality.",
     type: "website",
+    images: ['/logo.jpg'],
   }
 };
 

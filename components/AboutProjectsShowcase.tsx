@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/projects';
@@ -61,28 +62,29 @@ export default function AboutProjectsShowcase() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              className="group"
             >
-              <div className="relative aspect-[1.48] overflow-hidden bg-brand-gray">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-brand-navy/0 transition-colors duration-500 group-hover:bg-brand-navy/35" />
-                <span className="absolute right-5 top-5 flex h-11 w-11 translate-y-2 items-center justify-center bg-brand-orange text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  <ArrowUpRight size={20} />
-                </span>
-              </div>
-              <div className="flex items-start justify-between gap-4 pt-5">
-                <div>
-                  <h3 className="text-xl font-bold text-brand-navy">{project.title}</h3>
-                  <p className="mt-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                    Location <span className="text-brand-navy">{project.location}</span>
-                  </p>
+              <Link href={`/projects/${project.id}`} className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">
+                <div className="relative aspect-[1.48] overflow-hidden bg-brand-gray">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-brand-navy/0 transition-colors duration-500 group-hover:bg-brand-navy/35" />
+                  <span className="absolute right-5 top-5 flex h-11 w-11 translate-y-2 items-center justify-center bg-brand-orange text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
+                    <ArrowUpRight size={20} />
+                  </span>
                 </div>
-                <span className="pt-1 text-xs font-bold uppercase tracking-[0.14em] text-brand-orange">{project.category}</span>
-              </div>
+                <div className="flex items-start justify-between gap-4 pt-5">
+                  <div>
+                    <h3 className="text-xl font-bold text-brand-navy group-hover:text-brand-orange transition-colors">{project.title}</h3>
+                    <p className="mt-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                      Location <span className="text-brand-navy">{project.location}</span>
+                    </p>
+                  </div>
+                  <span className="pt-1 text-xs font-bold uppercase tracking-[0.14em] text-brand-orange">{project.category}</span>
+                </div>
+              </Link>
             </motion.article>
           ))}
         </motion.div>

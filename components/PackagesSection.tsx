@@ -66,7 +66,7 @@ export default function PackagesSection() {
                 href="/contact"
                 className={`w-full py-4 rounded-xl text-center font-bold transition-all ${
                   pkg.popular
-                    ? 'bg-brand-orange text-white hover:bg-orange-600 shadow-lg'
+                    ? 'bg-brand-orange text-white hover:bg-blue-700 shadow-lg shadow-blue-500/20'
                     : 'bg-slate-100 text-brand-navy hover:bg-slate-200'
                 }`}
               >

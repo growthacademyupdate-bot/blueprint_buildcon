@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,16 +37,39 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${showSolidNav
-          ? 'bg-white/95 backdrop-blur-md shadow-sm py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-white/95 backdrop-blur-md shadow-sm py-2.5'
+          : 'bg-transparent py-4'
         }`}
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex-shrink-0">
-            <span className={`text-xl font-bold tracking-tight ${showSolidNav ? 'text-brand-navy' : 'text-brand-navy lg:text-white'}`}>
-              Blueprint<span className="text-brand-orange">BuildCon</span>
-            </span>
+          <Link href="/" className="group flex items-center gap-3 flex-shrink-0">
+            <div className={`relative flex items-center justify-center w-11 h-11 rounded-xl p-1.5 transition-all duration-300 group-hover:scale-105 ${
+              showSolidNav
+                ? 'bg-gradient-to-br from-blue-50 to-white shadow-md shadow-blue-900/5 ring-1 ring-blue-500/20'
+                : 'bg-white/95 shadow-lg shadow-black/20 ring-1 ring-white/60'
+            }`}>
+              <Image
+                src="/logo-mark.png"
+                alt="BluePrint-BuildCon"
+                width={40}
+                height={40}
+                priority
+                className="w-full h-full object-contain filter drop-shadow-sm"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-xl font-extrabold tracking-tight leading-none ${
+                showSolidNav ? 'text-brand-navy' : 'text-brand-navy lg:text-white'
+              }`}>
+                BluePrint<span className="text-brand-orange">-BuildCon</span>
+              </span>
+              <span className={`text-[8.5px] font-bold uppercase tracking-[0.24em] mt-1 transition-colors ${
+                showSolidNav ? 'text-slate-400 group-hover:text-brand-orange' : 'text-slate-500 lg:text-blue-100/80 group-hover:text-white'
+              }`}>
+                Ideas • Structures • Reality
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -65,7 +89,7 @@ export default function Navbar() {
             </ul>
             <Link
               href="/contact"
-              className="px-6 py-2.5 bg-brand-orange text-white text-sm font-medium rounded-full hover:bg-orange-600 transition-colors shadow-sm"
+              className="px-6 py-2.5 bg-brand-orange text-white text-sm font-medium rounded-full hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20"
             >
               Get Free Consultation
             </Link>
@@ -106,7 +130,7 @@ export default function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-4 mx-4 px-6 py-3 bg-brand-orange text-white text-center font-medium rounded-lg hover:bg-orange-600 transition-colors"
+                className="mt-4 mx-4 px-6 py-3 bg-brand-orange text-white text-center font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20"
               >
                 Get Free Consultation
               </Link>

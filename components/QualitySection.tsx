@@ -50,7 +50,7 @@ export default function QualitySection() {
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
                   className="group text-center"
                 >
-                  <div className="relative z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-brand-orange text-sm font-bold text-white shadow-[0_4px_14px_rgba(228,107,60,0.3)] transition-transform duration-300 group-hover:scale-110">
+                  <div className="relative z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-brand-orange text-sm font-bold text-white shadow-[0_4px_14px_rgba(19,96,226,0.3)] transition-transform duration-300 group-hover:scale-110">
                     {String(idx + 1).padStart(2, '0')}
                   </div>
                   <div className="mt-7 min-h-28 border-t-2 border-transparent px-2 pt-4 transition-colors group-hover:border-brand-orange">

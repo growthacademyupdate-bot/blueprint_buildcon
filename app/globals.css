@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-navy: #14221f;
-  --color-brand-orange: #e46b3c;
-  --color-brand-gray: #f4f1eb;
-  --color-brand-charcoal: #26332f;
-  --color-brand-sand: #e7dfd2;
+  --color-brand-navy: #0a1227;
+  --color-brand-blue: #1360e2;
+  --color-brand-blue-hover: #0b4ec2;
+  --color-brand-blue-light: #eff6ff;
+  --color-brand-cyan: #00b4d8;
+  --color-brand-orange: #1360e2;
+  --color-brand-gray: #f4f7fb;
+  --color-brand-charcoal: #1e293b;
+  --color-brand-sand: #e2e8f2;
   
   --color-background: #ffffff;
   --color-foreground: var(--color-brand-charcoal);
@@ -37,7 +41,7 @@ h6 {
 }
 
 ::selection {
-  background-color: var(--color-brand-orange);
+  background-color: var(--color-brand-blue);
   color: white;
 }
 
@@ -48,8 +52,9 @@ html {
 
 body:has(.admin-root) > nav,
 body:has(.admin-root) > footer,
-body:has(.admin-root) > div[aria-label="Floating contact actions"] {
-  display: none;
+body:has(.admin-root) > div[aria-label="Floating contact actions"],
+body:has(.admin-root) div.fixed.bottom-6.right-6 {
+  display: none !important;
 }
 
 .field {
@@ -63,7 +68,7 @@ body:has(.admin-root) > div[aria-label="Floating contact actions"] {
 
 .field:focus {
   border-color: var(--color-brand-orange);
-  box-shadow: 0 0 0 2px rgb(228 107 60 / 15%);
+  box-shadow: 0 0 0 2px rgb(19 96 226 / 15%);
 }
 
 .admin-root main {

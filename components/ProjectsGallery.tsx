@@ -7,6 +7,8 @@ import { X, MapPin, ExternalLink } from 'lucide-react';
 import { projects } from '@/data/projects';
 import type { PublicProject } from '@/lib/public-content';
 
+import Link from 'next/link';
+
 export default function ProjectsGallery({ projects: providedProjects }: { projects?: PublicProject[] }) {
   const projectData = providedProjects ?? projects;
   const [filter, setFilter] = useState('All');
@@ -56,30 +58,46 @@ export default function ProjectsGallery({ projects: providedProjects }: { projec
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
                 key={project.id}
-                className="group cursor-pointer rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col"
-                onClick={() => setSelectedProject(project)}
+                className="group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col bg-white"
               >
-                <div className="relative h-64 overflow-hidden">
+                <Link href={`/projects/${project.id}`} className="relative h-64 overflow-hidden block">
                   <div className="absolute inset-0 bg-brand-navy/10 group-hover:bg-transparent transition-colors z-10" />
                   <img
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute top-4 left-4 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full z-20">
+                  <div className="absolute top-4 left-4 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full z-20 shadow-sm">
                     {project.category}
                   </div>
-                </div>
+                </Link>
                 <div className="p-6 bg-white flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-brand-navy mb-2">{project.title}</h3>
+                  <Link href={`/projects/${project.id}`}>
+                    <h3 className="text-xl font-bold text-brand-navy mb-2 group-hover:text-brand-orange transition-colors">
+                      {project.title}
+                    </h3>
+                  </Link>
                   <div className="flex items-center text-slate-500 text-sm mb-4">
                     <MapPin size={16} className="mr-1 shrink-0" />
                     <span>{project.location}</span>
                   </div>
                   <p className="text-slate-600 text-sm mb-6 line-clamp-2 flex-1">{project.description}</p>
-                  <button className="text-brand-orange font-semibold flex items-center hover:text-orange-700 transition-colors mt-auto">
-                    View Project <ExternalLink size={16} className="ml-2" />
-                  </button>
+                  <div className="mt-auto pt-3 flex items-center justify-between border-t border-slate-100">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="text-brand-orange font-semibold flex items-center hover:text-blue-700 transition-colors"
+                    >
+                      View Project <ExternalLink size={16} className="ml-2" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProject(project)}
+                      className="text-xs text-slate-400 hover:text-brand-navy font-medium py-1 px-2.5 rounded-full hover:bg-slate-100 transition-colors"
+                      title="Quick summary modal"
+                    >
+                      Quick Preview
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -107,6 +125,7 @@ export default function ProjectsGallery({ projects: providedProjects }: { projec
               <button
                 className="absolute top-4 right-4 z-20 bg-white/50 backdrop-blur-md p-2 rounded-full text-brand-navy hover:bg-white transition-colors shadow-sm"
                 onClick={() => setSelectedProject(null)}
+                aria-label="Close modal"
               >
                 <X size={24} />
               </button>
@@ -119,7 +138,7 @@ export default function ProjectsGallery({ projects: providedProjects }: { projec
                 />
               </div>
               <div className="md:w-1/2 p-6 md:p-10 overflow-y-auto">
-                <div className="inline-block bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                <div className="inline-block bg-blue-50 text-blue-700 border border-blue-200/60 text-xs font-bold px-3 py-1 rounded-full mb-4">
                   {selectedProject.category}
                 </div>
                 <h2 className="text-3xl font-bold text-brand-navy mb-2">{selectedProject.title}</h2>
@@ -150,14 +169,20 @@ export default function ProjectsGallery({ projects: providedProjects }: { projec
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-slate-100">
-                  <h4 className="font-semibold text-brand-navy mb-4">Want something similar?</h4>
+                <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href={`/projects/${selectedProject.id}`}
+                    onClick={() => setSelectedProject(null)}
+                    className="flex-1 py-3 bg-brand-orange text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-center text-sm shadow-md"
+                  >
+                    View Full Details Page
+                  </Link>
                   <button 
                     onClick={() => {
                       setSelectedProject(null);
                       router.push('/contact');
                     }}
-                    className="w-full py-3 bg-brand-navy text-white rounded-lg hover:bg-slate-800 transition-colors font-semibold"
+                    className="flex-1 py-3 bg-brand-navy text-white rounded-lg hover:bg-slate-800 transition-colors font-semibold text-center text-sm"
                   >
                     Discuss Your Project
                   </button>

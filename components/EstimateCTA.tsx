@@ -37,7 +37,7 @@ export default function EstimateCTA() {
           >
             <Link
               href="/contact"
-              className="flex items-center justify-center px-8 py-4 bg-brand-orange text-white font-bold rounded-xl hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
+              className="flex items-center justify-center px-8 py-4 bg-brand-orange text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/25"
             >
               <Calculator className="mr-2 w-5 h-5" />
               Get Free Estimate

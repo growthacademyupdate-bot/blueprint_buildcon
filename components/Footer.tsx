@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin } from 'lucide-react';
 
 export default function Footer() {
@@ -10,10 +11,26 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Column 1 */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold tracking-tight">
-              Blueprint <span className="text-brand-orange">Build Con</span>
-            </h3>
-            <p className="text-brand-orange font-medium">From Blueprint to Reality.</p>
+            <Link href="/" className="group inline-flex items-center gap-3.5">
+              <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 ring-1 ring-white/20 p-2 backdrop-blur-md transition-all group-hover:bg-white/15 group-hover:ring-brand-orange/40 group-hover:scale-105">
+                <Image
+                  src="/logo-mark.png"
+                  alt="BluePrint-BuildCon"
+                  width={44}
+                  height={44}
+                  className="w-full h-full object-contain filter drop-shadow"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold tracking-tight text-white leading-tight">
+                  BluePrint<span className="text-brand-orange">-BuildCon</span>
+                </span>
+                <span className="text-[9.5px] font-semibold uppercase tracking-[0.24em] text-blue-200/80">
+                  Ideas | Structures | Reality
+                </span>
+              </div>
+            </Link>
+            <p className="text-brand-orange font-medium text-sm">From Blueprint to Reality.</p>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
               Providing complete, transparent, and high-quality construction solutions for residential and commercial projects.
             </p>
@@ -84,7 +101,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-slate-500">
-          <p>© {currentYear} Blueprint Build Con. All Rights Reserved.</p>
+          <p>© {currentYear} BluePrint-BuildCon. All Rights Reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-white transition-colors">Terms & Conditions</Link>

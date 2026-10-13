@@ -1,8 +1,14 @@
 'use client';
 
 import { Phone, MessageCircle } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function FloatingActions() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const whatsappNumber = "919999999999";
   const phoneNumber = "+919999999999";
 
