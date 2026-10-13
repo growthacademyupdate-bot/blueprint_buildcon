@@ -10,6 +10,7 @@ export default function HeroSection() {
     name: '',
     phone: '',
     company: '',
+    address: '',
     message: '',
   });
 
@@ -57,6 +58,7 @@ export default function HeroSection() {
           name: formData.name,
           phone: formData.phone,
           company: formData.company,
+          address: formData.address,
           message: formData.message,
         }),
       });
@@ -67,7 +69,7 @@ export default function HeroSection() {
       }
 
       setIsSubmitted(true);
-      setFormData({ name: '', phone: '', company: '', message: '' });
+      setFormData({ name: '', phone: '', company: '', address: '', message: '' });
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Unable to submit your enquiry');
@@ -148,7 +150,7 @@ export default function HeroSection() {
 
       {isFormOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="consultation-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsFormOpen(false); }}>
-          <motion.div initial={{ opacity: 0, scale: 0.96, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.25 }} className="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden bg-white shadow-2xl md:grid-cols-[0.9fr_1.1fr]">
+          <motion.div initial={{ opacity: 0, scale: 0.96, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.25 }} className="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-lg bg-white shadow-2xl md:grid-cols-[0.9fr_1.1fr]">
             <div className="relative hidden min-h-[420px] overflow-hidden bg-brand-navy md:block">
               <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=85&w=1000" alt="Blueprint Build Con construction project" className="absolute inset-0 h-full w-full object-cover opacity-70" />
               <div className="absolute inset-0 bg-brand-navy/70" />
@@ -159,18 +161,19 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="relative min-h-0 overflow-y-auto p-5 sm:p-6 md:p-7">
-              <button type="button" aria-label="Close consultation form" onClick={() => setIsFormOpen(false)} className="absolute right-5 top-5 text-slate-400 transition-colors hover:text-brand-navy"><X size={24} /></button>
-              <h2 id="consultation-title" className="pr-8 text-2xl font-bold leading-tight text-brand-navy sm:text-3xl">Let Us Help You With the Right Solution</h2>
+            <div className="modal-scrollbar relative max-h-[90vh] overflow-y-auto p-5 sm:p-6 md:p-7 [scrollbar-gutter:stable]">
+              <button type="button" aria-label="Close consultation form" onClick={() => setIsFormOpen(false)} className="sticky float-right top-0 z-10 -mr-2 -mt-2 p-2 text-slate-400 transition-colors hover:text-brand-navy"><X size={24} /></button>
+              <h2 id="consultation-title" className="pr-6 text-2xl font-bold leading-tight text-brand-navy sm:text-3xl">Let Us Help You With the Right Solution</h2>
 
               {isSubmitted ? (
                 <div className="mt-8 space-y-4 border border-green-200 bg-green-50 p-6 text-center text-green-700"><CheckCircle2 className="mx-auto h-12 w-12 text-green-500" /><p className="text-lg font-bold">Thank you!</p><p>Our construction expert will contact you shortly.</p></div>
               ) : (
-                <form onSubmit={handleSubmit} className="mt-5 space-y-3">
+                <form onSubmit={handleSubmit} className="mt-5 space-y-3 pb-2">
                   {error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
                   <input type="text" name="name" placeholder="Your Name" required value={formData.name} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
                   <input type="tel" name="phone" placeholder="Your Phone Number" required value={formData.phone} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
                   <input type="text" name="company" placeholder="Company Name" value={formData.company} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
+                  <input type="text" name="address" placeholder="Project / Site Address" value={formData.address} onChange={handleChange} className="w-full border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
                   <textarea name="message" placeholder="Message..." rows={2} value={formData.message} onChange={handleChange} className="w-full resize-none border border-blue-300 px-4 py-2.5 text-base outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
                   <p className="text-sm font-medium leading-5 text-blue-700">By clicking Sign Up, you confirm that you have read and agree to our Terms &amp; Conditions and Privacy Policy.</p>
                   <label className="flex items-start gap-2 text-sm leading-5 text-blue-700"><input type="checkbox" required className="mt-1 h-4 w-4 accent-blue-600" /><span>By submitting this form, you agree to be contacted by us on <strong>WhatsApp / SMS / Email</strong> regarding your enquiry.</span></label>
