@@ -2,10 +2,14 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import Testimonial from '@/models/Testimonial';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const includePending = searchParams.get('all') === 'true';
+    
     await connectToDatabase();
-    const testimonials = await Testimonial.find({ status: 'approved' }).sort({ createdAt: -1 });
+    const query = includePending ? {} : { status: { $in: ['approved', 'pending'] } };
+    const testimonials = await Testimonial.find(query).sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: testimonials });
   } catch (error) {
     return NextResponse.json({ success: false, error: 'Failed to fetch testimonials' }, { status: 500 });

@@ -16,7 +16,7 @@ type Testimonial = {
 export default function TestimonialsSection() {
   const [dynamicTestimonials, setDynamicTestimonials] = useState<Testimonial[]>([]);
 
-  useEffect(() => {
+  const fetchTestimonials = () => {
     fetch('/api/testimonials')
       .then(async (res) => {
         const result = await res.json();
@@ -25,6 +25,10 @@ export default function TestimonialsSection() {
         }
       })
       .catch(() => undefined);
+  };
+
+  useEffect(() => {
+    fetchTestimonials();
   }, []);
 
   const renderStars = (rating: number) => {
@@ -65,7 +69,7 @@ export default function TestimonialsSection() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           {fallbackTestimonials.map((testimonial, idx) => (
             <motion.div
               key={testimonial.id}
@@ -73,28 +77,30 @@ export default function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-brand-gray border border-slate-100 rounded-3xl p-8 md:p-10 relative shadow-sm hover:shadow-xl transition-shadow"
+              className="bg-brand-gray border border-slate-100 rounded-3xl p-8 md:p-10 relative shadow-sm hover:shadow-xl transition-shadow flex flex-col justify-between"
             >
-              <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-200" />
+              <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-200 pointer-events-none" />
               
-              <div className="flex text-yellow-400 mb-6">
-                {renderStars(testimonial.rating)}
+              <div>
+                <div className="flex text-yellow-400 mb-6">
+                  {renderStars(testimonial.rating)}
+                </div>
+                
+                <p className="text-slate-600 text-lg mb-8 leading-relaxed italic relative z-10">
+                  &ldquo;{testimonial.text}&rdquo;
+                </p>
               </div>
               
-              <p className="text-slate-600 text-lg mb-8 leading-relaxed italic relative z-10">
-                &ldquo;{testimonial.text}&rdquo;
-              </p>
-              
-              <div className="flex items-center">
+              <div className="flex items-center pt-4 border-t border-slate-200/60 mt-auto">
                 {testimonial.avatar && (
                   <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
-                    className="w-14 h-14 rounded-full object-cover mr-4"
+                    className="w-14 h-14 rounded-full object-cover mr-4 ring-2 ring-white shadow-sm"
                   />
                 )}
                 <div>
-                  <h4 className="font-bold text-brand-navy">{testimonial.name}</h4>
+                  <h4 className="font-bold text-brand-navy leading-snug">{testimonial.name}</h4>
                   <p className="text-sm text-slate-500">{testimonial.projectType} • {testimonial.location}</p>
                 </div>
               </div>
@@ -106,25 +112,27 @@ export default function TestimonialsSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: (fallbackTestimonials.length + idx) * 0.1 }}
-              className="bg-brand-gray border border-slate-100 rounded-3xl p-8 md:p-10 relative shadow-sm hover:shadow-xl transition-shadow"
+              transition={{ duration: 0.5, delay: (fallbackTestimonials.length + idx) * 0.05 }}
+              className="bg-brand-gray border border-slate-100 rounded-3xl p-8 md:p-10 relative shadow-sm hover:shadow-xl transition-shadow flex flex-col justify-between"
             >
-              <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-200" />
+              <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-200 pointer-events-none" />
               
-              <div className="flex text-yellow-400 mb-6">
-                {renderStars(testimonial.rating)}
+              <div>
+                <div className="flex text-yellow-400 mb-6">
+                  {renderStars(testimonial.rating)}
+                </div>
+                
+                <p className="text-slate-600 text-lg mb-8 leading-relaxed italic relative z-10">
+                  &ldquo;{testimonial.feedback}&rdquo;
+                </p>
               </div>
               
-              <p className="text-slate-600 text-lg mb-8 leading-relaxed italic relative z-10">
-                &ldquo;{testimonial.feedback}&rdquo;
-              </p>
-              
-              <div className="flex items-center">
-                <div className="w-14 h-14 rounded-full bg-slate-300 mr-4 flex items-center justify-center text-slate-600 font-bold text-xl uppercase">
-                  {testimonial.fullname.charAt(0)}
+              <div className="flex items-center pt-4 border-t border-slate-200/60 mt-auto">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-navy to-blue-600 mr-4 flex items-center justify-center text-white font-bold text-xl uppercase ring-2 ring-white shadow-sm flex-shrink-0">
+                  {testimonial.fullname.trim().charAt(0) || 'U'}
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-navy">{testimonial.fullname}</h4>
+                  <h4 className="font-bold text-brand-navy leading-snug">{testimonial.fullname}</h4>
                   <p className="text-sm text-slate-500">Verified Client</p>
                 </div>
               </div>
@@ -138,7 +146,7 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <TestimonialForm />
+          <TestimonialForm onSubmitted={fetchTestimonials} />
         </motion.div>
       </div>
     </section>
